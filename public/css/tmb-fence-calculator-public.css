@@ -1,0 +1,22 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+ .select-active{
+   background-color: yellow;
+   color:#fff;
+ }
+#stepTab{
+  display: none;
+}
+.btnPrevious{
+  position: absolute;
+  right: 0;
+}
+
+.index-last-step .btnPrevious{
+  margin-left: 0;
+}
+.tab-pane ul li{
+  list-style-type: none;
+}
