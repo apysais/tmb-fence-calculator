@@ -2,6 +2,7 @@
 	'use strict';
 
 	$(window).load(function(){
+		var _tab_container = $('#stepTab');
 
 		var Cookie = {
 			Create: function (name, value, days) {
@@ -95,6 +96,12 @@
 					return _input_au_state.val();
 				},
 
+				onClick: function() {
+					_input_au_state.on('click', function(e){
+						return _input_au_state.val();
+					});
+				},
+
 		  }
 		})();
 
@@ -123,6 +130,10 @@
 
 				getValue: function() {
 					return Number(_input_height.val());
+				},
+
+				isVisible: function() {
+
 				},
 
 		  }
@@ -174,13 +185,13 @@
 		})();
 
 		var SelectFenceTypeShape = (function () {
+			var _input_fence_type_shape = $('#input-js-fence-type-shape');
 
 		  return {
 
 				set: function() {
 					var _cookie_prefix = 'fence-type-shape';
 					var _get_cookie = '';
-					var _input_fence_type_shape = $('#input-js-fence-type-shape');
 
 					$('.js-fence-type-shape').on('click', function(e){
 						e.preventDefault();
@@ -199,6 +210,10 @@
 						_input_fence_type_shape.val(_get_cookie);
 					}
 
+				},
+
+				getValue: function() {
+					return _input_fence_type_shape.val();
 				},
 
 		  }
@@ -648,34 +663,74 @@
 			}
 		})();
 
-		var TabCalc = (function(){
-			var _tab_container = $('#stepTab');
+		var AjaxLocationTypeShape = (function(){
+			var _select_height;
+			var _tab_container_id;
+			var _tab_id;
+			var _has_js_height;
+
+			function _ajaxLocationTypeShape(location, fence_type, fence_shape) {
+				var data = {
+					'action': 'get_location_type_shape',
+					'location': location,
+					'fence_type': fence_type,
+					'fence_shape': fence_shape,
+				};
+
+				var request = $.ajax({
+					url: ajax_object.ajax_url,
+					method: "POST",
+					data: data,
+					dataType: "json"
+				});
+
+				request.success(function( msg ) {
+					console.log(msg);
+					var _js_height_select = $('.js-height');
+
+					$.each(msg.data,function(key, value){
+					    _js_height_select.append('<option value=' + value + '>' + value + '</option>');
+					});
+
+				});
+
+				request.fail(function( jqXHR, textStatus ) {
+					console.log("Request failed: " + textStatus);
+				});
+			}
+
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
-					  var current_target = e.target // newly activated tab
-						if($(current_target).hasClass('index-last-step')){
-							CalculateTimberUnits.init();
-							CalculateVerticalFencePost.init();
-							CalculateMinHeightVerticalFencePost.init();
-							CalculateTimberCappingUnits.init();
-							CalculateFixings.init();
-							CalculateOverLappingTimberUnits.init();
-							CalculateHorizontalSupportRail.init();
-							CalculateTotalPicketPailing.init();
+						var _location = SelectLocation.getValue();
+						var _fence_type = SelectFenceType.getValue();
+						var _fence_shape = SelectFenceTypeShape.getValue();
+
+						var current_target = e.target;
+
+						_tab_container_id = $(current_target).attr('aria-controls');
+						_tab_id = $('#' + _tab_container_id);
+
+						_has_js_height = _tab_id.find('.js-height');
+						if(_has_js_height.length == 1){
+							_has_js_height.empty();
+							console.log(_location);
+							console.log(_fence_type);
+							console.log(_fence_shape);
+							_ajaxLocationTypeShape(_location, _fence_type, _fence_shape);
 						}
+
 					});
+
 				},
 			}
 		})();
 
-
 		var TabCalc = (function(){
-			var _tab_container = $('#stepTab');
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
-					  var current_target = e.target // newly activated tab
+					  var current_target = e.target;
 						if($(current_target).hasClass('index-last-step')){
 							CalculateTimberUnits.init();
 							CalculateVerticalFencePost.init();
@@ -701,6 +756,7 @@
 			CurrentStep.set();
 
 			TabCalc.init();
+			AjaxLocationTypeShape.init();
 
 			$('.btnNext').click(function() {
 				$('.nav-tabs .active').parent().next('li').find('a').trigger('click');

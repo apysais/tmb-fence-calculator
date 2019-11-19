@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-class TMB_Shortcode_LengthHeightInput {
+class TMB_BoardHeightAjax {
   /**
 	 * instance of this class
 	 *
@@ -38,20 +38,12 @@ class TMB_Shortcode_LengthHeightInput {
 
 	public function __construct()
 	{
-		add_shortcode( 'tmb_length_height_input', [$this, 'init'] );
+
 	}
 
-	public function init($atts)
-	{
-		$a = shortcode_atts( array(
+  public function get()
+  {
 
-		), $atts );
-		$field = TMB_ACF_GetHeightChoices::get_instance()->get();
-		$data['choices'] = $field['choices'];
-		
-		ob_start();
-		TMB_View::get_instance()->public_partials('length-height-input.php', $data);
-		return ob_get_clean();
-	}
+  }
 
-}//TMB_Shortcode_LengthHeightInput
+}//TMB_BoardHeightAjax

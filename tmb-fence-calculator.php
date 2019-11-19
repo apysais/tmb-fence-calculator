@@ -127,6 +127,8 @@ function run_tmb_fence_calculator() {
 	TMB_Shortcode_Plinth::get_instance();
 	TMB_Shortcode_WidthSpacingPalingOverlap::get_instance();
 	TMB_Shortcode_BomInfo::get_instance();
+
+	TMB_LocationTypeShapeAjax::get_instance();
 }
 //run_tmb_fence_calculator();
 

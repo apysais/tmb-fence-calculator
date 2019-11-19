@@ -99,7 +99,7 @@ class Tmb_Fence_Calculator_Public {
 
 		wp_enqueue_script( $this->plugin_name . '-bootstrap-js', tmb_get_plugin_dir_url() . 'assets/bootstrap/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tmb-fence-calculator-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_localize_script( $this->plugin_name, 'ajax_object',  array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 }

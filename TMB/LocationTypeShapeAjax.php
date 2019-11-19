@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-class TMB_Shortcode_LengthHeightInput {
+class TMB_LocationTypeShapeAjax {
   /**
 	 * instance of this class
 	 *
@@ -38,20 +38,20 @@ class TMB_Shortcode_LengthHeightInput {
 
 	public function __construct()
 	{
-		add_shortcode( 'tmb_length_height_input', [$this, 'init'] );
+    add_action( 'wp_ajax_get_location_type_shape', [$this, 'get'] );
+    add_action( 'wp_ajax_nopriv_get_location_type_shape', [$this, 'get'] );
 	}
 
-	public function init($atts)
-	{
-		$a = shortcode_atts( array(
+  public function get()
+  {
 
-		), $atts );
-		$field = TMB_ACF_GetHeightChoices::get_instance()->get();
-		$data['choices'] = $field['choices'];
-		
-		ob_start();
-		TMB_View::get_instance()->public_partials('length-height-input.php', $data);
-		return ob_get_clean();
-	}
+		$data_wp_arr = TMB_BoardHeight::get_instance()->get($_POST);
+    $data = [
+      'post' => $_POST,
+			'data' => $data_wp_arr
+    ];
+    echo json_encode($data);
+    wp_die();
+  }
 
-}//TMB_Shortcode_LengthHeightInput
+}//TMB_LocationTypeShapeAjax
