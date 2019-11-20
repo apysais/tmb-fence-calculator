@@ -2,7 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-class TMB_BoardHeight {
+/**
+* Get the timber species condition
+* by location, fence type and height
+**/
+class TMB_GetTimberSpeciesCondition {
   /**
 	 * instance of this class
 	 *
@@ -47,19 +51,29 @@ class TMB_BoardHeight {
 		$get_wp_data = new TMB_DataCondition;
 		$get_wp_data->get($args);
 		$data_wp_arr = $get_wp_data->getData();
+
 		if($data_wp_arr){
+			$old_timber_species = '';
 			foreach($data_wp_arr->posts as $k => $v){
-				$height = get_field('board_height', $v->ID);
-				if($height){
-					$data[] = $height;
+				$timber_species = get_the_terms( $v->ID, 'timber-species' );
+
+				if($timber_species){
+					foreach($timber_species as $tax_k => $tax_v){
+						$data[$tax_v->term_id] = [
+							'id' 		=> $tax_v->term_id,
+							'image' => 'image here',
+							'slug' 	=> $tax_v->slug,
+							'name' 	=> $tax_v->name,
+						];
+					}
+
 				}
+
 			}
+
 		}
 
-		sort($data);
-		$result = array_unique($data);
-
-		return $result;
+		return $data;
   }
 
-}//TMB_BoardHeightAjax
+}//TMB_GetTimberSpeciesCondition

@@ -1,5 +1,5 @@
 <?php if($timber_species){ ?>
-  <ul>
+  <ul class="js-timber-species-container">
   <?php foreach($timber_species as $k => $v){ ?>
             <li><a href="#" class="js-timber-species" data-timber-species="<?php echo $v->slug;?>"><?php echo $v->name;?></a></li>
   <?php } ?>

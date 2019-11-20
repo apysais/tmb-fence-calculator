@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-class TMB_BoardHeight {
+class TMB_TimberSpeciesAjax {
   /**
 	 * instance of this class
 	 *
@@ -38,28 +38,19 @@ class TMB_BoardHeight {
 
 	public function __construct()
 	{
-
+    add_action( 'wp_ajax_get_timber_species', [$this, 'get'] );
+    add_action( 'wp_ajax_nopriv_get_timber_species', [$this, 'get'] );
 	}
 
-  public function get($args = [])
+  public function get()
   {
-		$data = [];
-		$get_wp_data = new TMB_DataCondition;
-		$get_wp_data->get($args);
-		$data_wp_arr = $get_wp_data->getData();
-		if($data_wp_arr){
-			foreach($data_wp_arr->posts as $k => $v){
-				$height = get_field('board_height', $v->ID);
-				if($height){
-					$data[] = $height;
-				}
-			}
-		}
-
-		sort($data);
-		$result = array_unique($data);
-
-		return $result;
+		$data_wp_arr = TMB_GetTimberSpeciesCondition::get_instance()->get($_POST);
+    $data = [
+      'post' => $_POST,
+			'data' => $data_wp_arr
+    ];
+    echo json_encode($data);
+    wp_die();
   }
 
-}//TMB_BoardHeightAjax
+}//TMB_TimberSpeciesAjax

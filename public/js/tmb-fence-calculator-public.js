@@ -228,7 +228,7 @@
 					var _get_cookie = '';
 					var _input_timber_species = $('#input-js-timber-species');
 
-					$('.js-timber-species').on('click', function(e){
+					$(document).on('click', '.js-timber-species', function(e){
 						e.preventDefault();
 						var _this = $(this);
 						var _get_data = _this.data('timber-species');
@@ -237,8 +237,8 @@
 
 						//incase the page was reloaded
 						Cookie.Create(_cookie_prefix, _get_data, 1);
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
+							_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
+						});
 
 					_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
@@ -726,12 +726,87 @@
 			}
 		})();
 
+		var AjaxGetTimberSpecies = (function(){
+			var _select_height;
+			var _tab_container_id;
+			var _tab_id;
+			var _has_js_timber_species;
+
+			function _ajaxTimberSpecies(
+				location,
+				fence_type,
+				fence_shape,
+				board_height
+			) {
+				var data = {
+					'action': 'get_timber_species',
+					'location': location,
+					'fence_type': fence_type,
+					'fence_shape': fence_shape,
+					'board_height': board_height,
+				};
+
+				var request = $.ajax({
+					url: ajax_object.ajax_url,
+					method: "POST",
+					data: data,
+					dataType: "json"
+				});
+
+				request.success(function( msg ) {
+					console.log(msg);
+					var _js_timber_species = $('.js-timber-species-container');
+
+					$.each(msg.data,function(key, value){
+						_js_timber_species.append('<li><a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">'+value.name+'</a></li>');
+					});
+				});
+
+				request.fail(function( jqXHR, textStatus ) {
+					console.log("Request failed: " + textStatus);
+				});
+			}
+
+			return {
+				init: function() {
+					_tab_container.on('shown.bs.tab', function (e) {
+						var _location = SelectLocation.getValue();
+						var _fence_type = SelectFenceType.getValue();
+						var _fence_shape = SelectFenceTypeShape.getValue();
+						var _board_height = SelectBoardHeight.getValue();
+
+						var current_target = e.target;
+
+						_tab_container_id = $(current_target).attr('aria-controls');
+						_tab_id = $('#' + _tab_container_id);
+						console.log(_tab_container_id);
+						_has_js_timber_species = _tab_id.find('.js-timber-species-container');
+						if(_has_js_timber_species.length == 1){
+							_has_js_timber_species.find('li').remove();
+							console.log(_location);
+							console.log(_fence_type);
+							console.log(_fence_shape);
+							console.log(_board_height);
+							_ajaxTimberSpecies(
+								_location,
+								_fence_type,
+								_fence_shape,
+								_board_height
+							);
+						}
+
+					});
+
+				},
+			}
+		})();
+
 		var TabCalc = (function(){
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
 					  var current_target = e.target;
-						if($(current_target).hasClass('index-last-step')){
+						if($(current_target).hasClass('is-last-step-yes')){
 							CalculateTimberUnits.init();
 							CalculateVerticalFencePost.init();
 							CalculateMinHeightVerticalFencePost.init();
@@ -757,6 +832,7 @@
 
 			TabCalc.init();
 			AjaxLocationTypeShape.init();
+			AjaxGetTimberSpecies.init();
 
 			$('.btnNext').click(function() {
 				$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
