@@ -1,5 +1,5 @@
 <?php if($get_capping){ ?>
-  <ul>
+  <ul class="select-capping">
   <?php foreach($get_capping as $k => $v){ ?>
           <li><a href="#" class="js-capping" data-capping="<?php echo $v->slug;?>" data-val="<?php echo get_field('value', $v);?>"><?php echo $v->name;?></a></li>
   <?php } ?>

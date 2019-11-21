@@ -4,6 +4,15 @@
 	$(window).load(function(){
 		var _tab_container = $('#stepTab');
 
+		function show_hide_next_prev_button(action)
+		{
+			if(action == 'show'){
+				$('.next-prev-button').show();
+			}else{
+				$('.next-prev-button').hide();
+			}
+		}
+
 		var Cookie = {
 			Create: function (name, value, days) {
 			   var expires = "";
@@ -81,14 +90,14 @@
 						_input_au_state.val(_get_location_click);
 
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_location_click, 1);
+						//Cookie.Create(_cookie_prefix, _get_location_click, 1);
 						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
 					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_au_state.val(_get_cookie);
-					}
+					}*/
 
 				},
 
@@ -139,6 +148,19 @@
 		  }
 		})();
 
+		var SelectWidth = (function () {
+			var _class_name = '.js-width';
+			var _input_width = $('.js-width');
+
+		  return {
+
+				getValue: function() {
+					return Number(_input_width.val());
+				},
+
+		  }
+		})();
+
 		var SelectFenceType = (function () {
 
 			var _input_fence_type = $('#input-js-fence-type');
@@ -149,7 +171,6 @@
 					var _cookie_prefix = 'fence-type';
 					var _get_cookie = '';
 
-
 					$('.js-fence-type').on('click', function(e){
 						e.preventDefault();
 						var _this = $(this);
@@ -158,27 +179,39 @@
 						_input_fence_type.val(_get_data);
 
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_data, 1);
+						//Cookie.Create(_cookie_prefix, _get_data, 1);
 
 						if(_get_data == 'pailing'){
 							$('.pailing-type-shape').show();
 							$('.picket-type-shape').hide();
+							$('.select-capping').show();
 						}else{
 							$('.picket-type-shape').show();
 							$('.pailing-type-shape').hide();
+							$('.select-capping').hide();
 						}
 						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
 					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_fence_type.val(_get_cookie);
-					}
+					}*/
 
 				},
 
 				getValue: function() {
 					return _input_fence_type.val();
+				},
+
+				onClick: function() {
+					//$(document).on('click', '.js-fence-type', function(e){
+					$('.js-fence-type').on('click', function(e){
+						e.preventDefault();
+						var _this = $(this);
+						var _get_data = _this.data('fence-type');
+						return _get_data;
+					});
 				},
 
 		  }
@@ -201,14 +234,14 @@
 						_input_fence_type_shape.val(_get_data);
 
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_data, 1);
+						//Cookie.Create(_cookie_prefix, _get_data, 1);
 						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
 					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_fence_type_shape.val(_get_cookie);
-					}
+					}*/
 
 				},
 
@@ -220,13 +253,13 @@
 		})();
 
 		var SelectTimberSpecies = (function () {
+			var _input_timber_species = $('#input-js-timber-species');
 
 		  return {
 
 				set: function() {
 					var _cookie_prefix = 'timber-species';
 					var _get_cookie = '';
-					var _input_timber_species = $('#input-js-timber-species');
 
 					$(document).on('click', '.js-timber-species', function(e){
 						e.preventDefault();
@@ -236,15 +269,19 @@
 						_input_timber_species.val(_get_data);
 
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_data, 1);
+						//Cookie.Create(_cookie_prefix, _get_data, 1);
 							_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-						});
+					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_timber_species.val(_get_cookie);
-					}
+					}*/
 
+				},
+
+				getValue: function() {
+					return _input_timber_species.val();
 				},
 
 		  }
@@ -269,15 +306,15 @@
 						_input_capping.val(_get_data);
 						_input_capping_val.val(_get_data_val);
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_data, 1);
+						//Cookie.Create(_cookie_prefix, _get_data, 1);
 						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
 					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_capping.val(_get_cookie);
 						_input_capping_val.val(_get_cookie);
-					}
+					}*/
 
 				},
 
@@ -307,15 +344,15 @@
 						_input_plinth.val(_get_data);
 						_input_plinth_val.val(_get_data_val);
 						//incase the page was reloaded
-						Cookie.Create(_cookie_prefix, _get_data, 1);
+						//Cookie.Create(_cookie_prefix, _get_data, 1);
 						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
 					});
 
-					_get_cookie = Cookie.Get(_cookie_prefix);
+					/*_get_cookie = Cookie.Get(_cookie_prefix);
 					if(_get_cookie){
 						_input_plinth.val(_get_cookie);
 						_input_plinth_val.val(_get_cookie);
-					}
+					}*/
 
 				},
 
@@ -436,9 +473,9 @@
 
 					var _plinth = 0;
 					if(_get_plinth == 1){
-						var _plinth = 150;
+						_plinth = 150;
 					}else if(_get_plinth == 2){
-						var _plinth = 300;
+						_plinth = 300;
 					}
 
 					_calc = ( _picket_pailing_height + _plinth );
@@ -483,9 +520,8 @@
 						}else{
 							_calc_capping_location = 5400;
 						}
+						_calc = ( _length_m / _calc_capping_location );
 					}
-
-					_calc = ( _length_m / _calc_capping_location );
 
 					return _calc;
 				},
@@ -676,7 +712,7 @@
 					'fence_type': fence_type,
 					'fence_shape': fence_shape,
 				};
-
+				show_hide_next_prev_button('hide');
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
 					method: "POST",
@@ -691,7 +727,7 @@
 					$.each(msg.data,function(key, value){
 					    _js_height_select.append('<option value=' + value + '>' + value + '</option>');
 					});
-
+					show_hide_next_prev_button('show');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -745,7 +781,7 @@
 					'fence_shape': fence_shape,
 					'board_height': board_height,
 				};
-
+				show_hide_next_prev_button('hide');
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
 					method: "POST",
@@ -760,6 +796,7 @@
 					$.each(msg.data,function(key, value){
 						_js_timber_species.append('<li><a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">'+value.name+'</a></li>');
 					});
+					show_hide_next_prev_button('show');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -779,14 +816,10 @@
 
 						_tab_container_id = $(current_target).attr('aria-controls');
 						_tab_id = $('#' + _tab_container_id);
-						console.log(_tab_container_id);
+
 						_has_js_timber_species = _tab_id.find('.js-timber-species-container');
 						if(_has_js_timber_species.length == 1){
 							_has_js_timber_species.find('li').remove();
-							console.log(_location);
-							console.log(_fence_type);
-							console.log(_fence_shape);
-							console.log(_board_height);
 							_ajaxTimberSpecies(
 								_location,
 								_fence_type,
@@ -801,11 +834,93 @@
 			}
 		})();
 
+
+		var AjaxGetWidth = (function(){
+			var _select_width;
+
+			var _tab_container_id;
+			var _tab_id;
+			var _has_js_width;
+
+			function _ajaxLocationTypeShapeHeightSpecies(
+				location,
+				fence_type,
+				fence_shape,
+				board_height,
+				timber_species
+			) {
+				var data = {
+					'action': 'get_location_type_shape_height_species',
+					'location': location,
+					'fence_type': fence_type,
+					'fence_shape': fence_shape,
+					'board_height': board_height,
+					'timber_species': timber_species,
+				};
+				show_hide_next_prev_button('hide');
+				var request = $.ajax({
+					url: ajax_object.ajax_url,
+					method: "POST",
+					data: data,
+					dataType: "json"
+				});
+
+				request.success(function( msg ) {
+					console.log(msg);
+					var _js_width_select = $('.js-width');
+
+					$.each(msg.data,function(key, value){
+					    _js_width_select.append('<option value=' + value + '>' + value + '</option>');
+					});
+					show_hide_next_prev_button('show');
+				});
+
+				request.fail(function( jqXHR, textStatus ) {
+					console.log("Request failed: " + textStatus);
+				});
+			}
+
+			return {
+				init: function() {
+					_tab_container.on('shown.bs.tab', function (e) {
+						var _location = SelectLocation.getValue();
+						var _fence_type = SelectFenceType.getValue();
+						var _fence_shape = SelectFenceTypeShape.getValue();
+						var _board_height = SelectBoardHeight.getValue();
+						var _timber_species = SelectTimberSpecies.getValue();
+
+						var current_target = e.target;
+
+						_tab_container_id = $(current_target).attr('aria-controls');
+						_tab_id = $('#' + _tab_container_id);
+
+						_has_js_width = _tab_id.find('.js-width');
+						if(_has_js_width.length == 1){
+							_has_js_width.empty();
+
+							_ajaxLocationTypeShapeHeightSpecies(
+								_location,
+								_fence_type,
+								_fence_shape,
+								_board_height,
+								_timber_species
+							);
+						}
+
+					});
+
+				},
+			}
+		})();
+
 		var TabCalc = (function(){
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
 					  var current_target = e.target;
+					  var previous_target = e.relatedTarget;
+						var _fence_type = SelectFenceType.getValue();
+
 						if($(current_target).hasClass('is-last-step-yes')){
 							CalculateTimberUnits.init();
 							CalculateVerticalFencePost.init();
@@ -816,12 +931,16 @@
 							CalculateHorizontalSupportRail.init();
 							CalculateTotalPicketPailing.init();
 						}
+						if($(current_target).hasClass('select-fence-type-shape') && _fence_type == 'pailing'){
+							$('#stepTab li .select-type-fence').tab('show');
+						}
 					});
 				},
 			}
 		})();
 
 		$(document).ready(function() {
+			show_hide_next_prev_button('hide');
 			SelectLocation.set();
 			SelectFenceType.set();
 			SelectFenceTypeShape.set();
@@ -833,15 +952,23 @@
 			TabCalc.init();
 			AjaxLocationTypeShape.init();
 			AjaxGetTimberSpecies.init();
+			AjaxGetWidth.init();
 
 			$('.btnNext').click(function() {
-				$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+				var _this = $(this);
+				var _tab_id = _this.data('tab-id');
+				var _fence_type = $('#' + _tab_id).find('#input-js-fence-type').val();
+				if(_fence_type == 'pailing'){
+					$('#stepTab li .select-length-height').tab('show');
+				}else{
+					$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+				}
 			});
 
 			$('.btnPrevious').click(function() {
 				$('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
 			});
-
+			show_hide_next_prev_button('show');
 		});
 
 	});

@@ -90,6 +90,15 @@ class TMB_DataCondition {
 			];
 		}
 
+		if(isset($args['timber_species'])){
+			$timber_species = $args['timber_species'];
+			$query_args['tax_query'][] = [
+				'taxonomy' => 'timber-species',
+				'field'    => 'slug',
+				'terms'    => $timber_species,
+			];
+		}
+
 		//tmb_dd($query_args);
     $query = new WP_Query( $query_args );
 

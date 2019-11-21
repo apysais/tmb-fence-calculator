@@ -1,5 +1,6 @@
 <p>Width</p>
-<input type="text" name="width" class="js-width">
+<select name="width" class="js-width">
+</select>
 <p></p>
 <p>Spacing</p>
 <input type="text" name="spacing" class="js-spacing">

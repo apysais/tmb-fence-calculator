@@ -130,6 +130,7 @@ function run_tmb_fence_calculator() {
 
 	TMB_LocationTypeShapeAjax::get_instance();
 	TMB_TimberSpeciesAjax::get_instance();
+	TMB_WidthAjax::get_instance();
 }
 //run_tmb_fence_calculator();
 

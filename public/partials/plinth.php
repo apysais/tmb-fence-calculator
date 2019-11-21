@@ -1,5 +1,5 @@
 <?php if($get_plinth){ ?>
-  <ul>
+  <ul class="select-plinth">
   <?php foreach($get_plinth as $k => $v){ ?>
           <li><a href="#" class="js-plinth" data-plinth="<?php echo $v->slug;?>" data-val="<?php echo get_field('value', $v);?>"><?php echo $v->name;?></a></li>
   <?php } ?>
