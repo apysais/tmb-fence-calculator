@@ -4,6 +4,7 @@
   <?php if($rows){ ?>
     <?php $index = 0; ?>
     <ul class="nav nav-tabs" id="stepTab" role="tablist">
+      <?php $index = 0; ?>
       <?php foreach($rows as $k => $v){ ?>
               <?php
                 $last_step = 'is-last-step-' . $v['is_last_step'];
@@ -22,6 +23,7 @@
                   role="tab"
                   aria-controls="tab-content-<?php echo $k;?>"
                   aria-selected="true"
+                  data-index=<?php echo $index++; ?>
                 >
                   <?php echo $v['step_title']; ?>
                 </a>

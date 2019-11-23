@@ -6,10 +6,40 @@
 
 		function show_hide_next_prev_button(action)
 		{
+			console.log(action);
 			if(action == 'show'){
 				$('.next-prev-button').show();
 			}else{
 				$('.next-prev-button').hide();
+			}
+		}
+
+		function show_hide_nextbutton(action)
+		{
+			console.log(action);
+			if(action == 'show'){
+				$('.btnNext').show();
+			}else{
+				$('.btnNext').hide();
+			}
+		}
+
+		function show_hide_prevbutton(action)
+		{
+			console.log(action);
+			if(action == 'show'){
+				$('.btnPrevious').show();
+			}else{
+				$('.btnPrevious').hide();
+			}
+		}
+
+		function toggle_ajax_spinners(action)
+		{
+			if(action == 'show'){
+				$('.ajax-spinners').show();
+			}else{
+				$('.ajax-spinners').hide();
 			}
 		}
 
@@ -81,6 +111,7 @@
 					var _cookie_prefix = 'au-state';
 					var _get_cookie = '';
 
+					show_hide_next_prev_button('hide');
 
 					$('.js-au-state').on('click', function(e, _get_location_click){
 						e.preventDefault();
@@ -89,15 +120,17 @@
 						_get_location_click = _this.data('au-state');
 						_input_au_state.val(_get_location_click);
 
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_location_click, 1);
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
+						_this.toggleClass('select-active-map').siblings().removeClass('select-active-map');
 
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_au_state.val(_get_cookie);
-					}*/
+						var _has_active = $('.svg-map > a').hasClass('select-active-map');
+
+						if(_has_active){
+							show_hide_next_prev_button('show');
+						}else{
+							_input_au_state.val(0);
+							show_hide_next_prev_button('hide');
+						}
+					});
 
 				},
 
@@ -138,7 +171,19 @@
 		  return {
 
 				getValue: function() {
-					return Number(_input_height.val());
+					var _cookie_prefix = 'js-height';
+					var _get_cookie = '';
+
+					var _height = Number(_input_height.val());
+
+					// Cookie.Create(_cookie_prefix, _height, 1);
+					//
+					// _get_cookie = Cookie.Get(_cookie_prefix);
+					// if(_get_cookie){
+					// 	_input_fence_type.val(_get_cookie);
+					// }
+
+					return _height;
 				},
 
 				isVisible: function() {
@@ -155,7 +200,9 @@
 		  return {
 
 				getValue: function() {
-					return Number(_input_width.val());
+					var _width_val = Number(_input_width.val());
+
+					return _width_val;
 				},
 
 		  }
@@ -171,15 +218,15 @@
 					var _cookie_prefix = 'fence-type';
 					var _get_cookie = '';
 
+					//show_hide_nextbutton('hide');
+					//show_hide_prevbutton('show');
+					//$('.next-prev-button .btnNext').hide();
 					$('.js-fence-type').on('click', function(e){
 						e.preventDefault();
 						var _this = $(this);
 						var _get_data = _this.data('fence-type');
 
 						_input_fence_type.val(_get_data);
-
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_data, 1);
 
 						if(_get_data == 'pailing'){
 							$('.pailing-type-shape').show();
@@ -190,13 +237,16 @@
 							$('.pailing-type-shape').hide();
 							$('.select-capping').hide();
 						}
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
+						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_fence_type.val(_get_cookie);
-					}*/
+						var _has_active = $('.select-type-fence .row > div').hasClass('select-active-card');
+
+						if(_has_active){
+							show_hide_nextbutton('show');
+						}else{
+							show_hide_nextbutton('hide');
+						}
+					});
 
 				},
 
@@ -226,22 +276,16 @@
 					var _cookie_prefix = 'fence-type-shape';
 					var _get_cookie = '';
 
-					$('.js-fence-type-shape').on('click', function(e){
+					//$('.js-fence-type-shape').on('click', function(e){
+					$(document).on('click', '.js-fence-type-shape', function(e){
 						e.preventDefault();
 						var _this = $(this);
 						var _get_data = _this.data('type-shape');
 
 						_input_fence_type_shape.val(_get_data);
 
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_data, 1);
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
+						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 					});
-
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_fence_type_shape.val(_get_cookie);
-					}*/
 
 				},
 
@@ -268,15 +312,16 @@
 
 						_input_timber_species.val(_get_data);
 
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_data, 1);
-							_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
+						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_timber_species.val(_get_cookie);
-					}*/
+						var _has_active = $('.select-timber-species .row > div').hasClass('select-active-card');
+
+						if(_has_active){
+							show_hide_nextbutton('show');
+						}else{
+							show_hide_nextbutton('hide');
+						}
+					});
 
 				},
 
@@ -305,16 +350,17 @@
 
 						_input_capping.val(_get_data);
 						_input_capping_val.val(_get_data_val);
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_data, 1);
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
 
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_capping.val(_get_cookie);
-						_input_capping_val.val(_get_cookie);
-					}*/
+						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+
+						var _has_active = $('.select-capping > div').hasClass('select-active-card');
+
+						if(_has_active){
+							show_hide_nextbutton('show');
+						}else{
+							show_hide_nextbutton('hide');
+						}
+					});
 
 				},
 
@@ -343,16 +389,17 @@
 
 						_input_plinth.val(_get_data);
 						_input_plinth_val.val(_get_data_val);
-						//incase the page was reloaded
-						//Cookie.Create(_cookie_prefix, _get_data, 1);
-						_this.parent().toggleClass('select-active').siblings().removeClass('select-active');
-					});
 
-					/*_get_cookie = Cookie.Get(_cookie_prefix);
-					if(_get_cookie){
-						_input_plinth.val(_get_cookie);
-						_input_plinth_val.val(_get_cookie);
-					}*/
+						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+
+						var _has_active = $('.select-plinth > div').hasClass('select-active-card');
+						if(_has_active){
+							show_hide_nextbutton('show');
+						}else{
+							show_hide_nextbutton('hide');
+						}
+
+					});
 
 				},
 
@@ -365,11 +412,6 @@
 				},
 		  }
 		})();
-
-		function round_to_precision(x, precision) {
-		    var y = +x + (precision === undefined ? 0.5 : precision/2);
-		    return y - (y % (precision === undefined ? 1 : +precision));
-		}
 
 		var CalculateTimberUnits = (function(){
 			var _calc = 0;
@@ -713,6 +755,8 @@
 					'fence_shape': fence_shape,
 				};
 				show_hide_next_prev_button('hide');
+				toggle_ajax_spinners('show');
+				$('.js-height').hide();
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
 					method: "POST",
@@ -728,6 +772,9 @@
 					    _js_height_select.append('<option value=' + value + '>' + value + '</option>');
 					});
 					show_hide_next_prev_button('show');
+					toggle_ajax_spinners('hide');
+					_js_height_select.show();
+					show_hide_nextbutton('show');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -750,9 +797,6 @@
 						_has_js_height = _tab_id.find('.js-height');
 						if(_has_js_height.length == 1){
 							_has_js_height.empty();
-							console.log(_location);
-							console.log(_fence_type);
-							console.log(_fence_shape);
 							_ajaxLocationTypeShape(_location, _fence_type, _fence_shape);
 						}
 
@@ -782,6 +826,7 @@
 					'board_height': board_height,
 				};
 				show_hide_next_prev_button('hide');
+				toggle_ajax_spinners('show');
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
 					method: "POST",
@@ -794,9 +839,18 @@
 					var _js_timber_species = $('.js-timber-species-container');
 
 					$.each(msg.data,function(key, value){
-						_js_timber_species.append('<li><a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">'+value.name+'</a></li>');
+						var _card = '<div class="col-sm-3 timber-species-col">';
+							 _card += '<div class="card text-center">';
+								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
+								_card += '<div class="card-body">';
+									_card += '<a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">'+value.name+'</a>';
+								_card += '</div>';
+							_card += '</div>';
+						_card += '</div>';
+						_js_timber_species.append(_card);
 					});
 					show_hide_next_prev_button('show');
+					toggle_ajax_spinners('hide');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -819,7 +873,7 @@
 
 						_has_js_timber_species = _tab_id.find('.js-timber-species-container');
 						if(_has_js_timber_species.length == 1){
-							_has_js_timber_species.find('li').remove();
+							_has_js_timber_species.empty();
 							_ajaxTimberSpecies(
 								_location,
 								_fence_type,
@@ -858,6 +912,9 @@
 					'timber_species': timber_species,
 				};
 				show_hide_next_prev_button('hide');
+				toggle_ajax_spinners('show');
+				$('.js-width').hide();
+
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
 					method: "POST",
@@ -873,6 +930,9 @@
 					    _js_width_select.append('<option value=' + value + '>' + value + '</option>');
 					});
 					show_hide_next_prev_button('show');
+					toggle_ajax_spinners('hid');
+					$('.js-width').show();
+					show_hide_nextbutton('show');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -913,12 +973,100 @@
 			}
 		})();
 
+		var AjaxPicketShapeType = (function(){
+			var _tab_container_id;
+			var _tab_id;
+			var _has_js_picket_shapes_container;
+
+			function _ajaxLocationPicketShape(
+				location,
+				fence_type,
+			) {
+				var data = {
+					'action': 'get_location_type',
+					'location': location,
+					'fence_type': fence_type
+				};
+
+				show_hide_next_prev_button('hide');
+
+				toggle_ajax_spinners('show');
+
+				var request = $.ajax({
+					url: ajax_object.ajax_url,
+					method: "POST",
+					data: data,
+					dataType: "json"
+				});
+
+				request.success(function( msg ) {
+					console.log(msg);
+					var _js_picket_shape_select = $('.js-picket-shapes-container');
+
+					$.each(msg.data,function(key, value){
+						var _card = '<div class="col-sm-3 fence-type-col">';
+							 _card += '<div class="card text-center">';
+								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
+								_card += '<div class="card-body">';
+									_card += '<a href="#" class="js-fence-type-shape" data-type-shape="'+value.slug+'">'+value.name+'</a>';
+								_card += '</div>';
+							_card += '</div>';
+						_card += '</div>';
+						_js_picket_shape_select.append(_card);
+					});
+
+					show_hide_next_prev_button('show');
+					toggle_ajax_spinners('hide');
+					show_hide_nextbutton('show');
+				});
+
+				request.fail(function( jqXHR, textStatus ) {
+					console.log("Request failed: " + textStatus);
+				});
+			}
+
+			return {
+				init: function() {
+					_tab_container.on('shown.bs.tab', function (e) {
+						var _location = SelectLocation.getValue();
+						var _fence_type = SelectFenceType.getValue();
+
+						var current_target = e.target;
+
+						_tab_container_id = $(current_target).attr('aria-controls');
+						_tab_id = $('#' + _tab_container_id);
+
+						_has_js_picket_shapes_container = _tab_id.find('.js-picket-shapes-container');
+						if(_has_js_picket_shapes_container.length == 1){
+							_has_js_picket_shapes_container.empty();
+
+							_ajaxLocationPicketShape(
+								_location,
+								_fence_type
+							);
+						}
+
+					});
+				},
+			}
+		})();
+
 		var TabCalc = (function(){
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
 					  var current_target = e.target;
+						console.log('current ');
+						console.log(current_target);
 					  var previous_target = e.relatedTarget;
+						console.log('prev ');
+						console.log(previous_target);
+
+						if($(current_target).data('index') > 0){
+							show_hide_nextbutton('hide');
+						}else{
+							show_hide_nextbutton('show');
+						}
 						var _fence_type = SelectFenceType.getValue();
 
 						if($(current_target).hasClass('is-last-step-yes')){
@@ -953,6 +1101,7 @@
 			AjaxLocationTypeShape.init();
 			AjaxGetTimberSpecies.init();
 			AjaxGetWidth.init();
+			AjaxPicketShapeType.init();
 
 			$('.btnNext').click(function() {
 				var _this = $(this);
@@ -968,7 +1117,7 @@
 			$('.btnPrevious').click(function() {
 				$('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
 			});
-			show_hide_next_prev_button('show');
+
 		});
 
 	});

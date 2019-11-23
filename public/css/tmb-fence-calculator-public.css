@@ -9,6 +9,10 @@
 #stepTab{
   display: none;
 }
+.next-prev-button{
+  margin-top: 20px;
+  color:#fff;
+}
 .btnPrevious{
   position: absolute;
   right: 0;
@@ -19,4 +23,61 @@
 }
 .tab-pane ul li{
   list-style-type: none;
+}
+.select-active-card .card{
+  background-color: yellow;
+}
+
+.svg-map-act{
+  fill: #1a659c;
+}
+.svg-map-act-line{
+  stroke:#555;
+  width:2px;
+}
+.svg-map-nsw{
+  fill: #57b9fa;
+}
+.svg-map-nt{
+  fill: #57b9fa;
+}
+.svg-map-qld{
+  fill: #1a659c;
+}
+.svg-map-sa{
+  fill: #04a0ed;
+}
+.svg-map-tas{
+  fill: #04a0ed;
+}
+.svg-map-vic{
+  fill: #0a7ec7;
+}
+.svg-map-wa{
+  fill: #0a7ec7;
+}
+
+.map-container{
+  text-align: center;
+}
+.svg-map{
+  width: 50%;
+}
+.svg-map a.select-active-map .svg-map-act,
+.svg-map a.select-active-map .svg-map-nsw,
+.svg-map a.select-active-map .svg-map-nt,
+.svg-map a.select-active-map .svg-map-qld,
+.svg-map a.select-active-map .svg-map-sa,
+.svg-map a.select-active-map .svg-map-tas,
+.svg-map a.select-active-map .svg-map-vic,
+.svg-map a.select-active-map .svg-map-wa,
+.svg-map a:hover .svg-map-act,
+.svg-map a:hover .svg-map-nsw,
+.svg-map a:hover .svg-map-nt,
+.svg-map a:hover .svg-map-qld,
+.svg-map a:hover .svg-map-sa,
+.svg-map a:hover .svg-map-tas,
+.svg-map a:hover .svg-map-vic,
+.svg-map a:hover .svg-map-wa {
+    fill: #999;
 }

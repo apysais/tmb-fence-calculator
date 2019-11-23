@@ -1,4 +1,5 @@
 <p>Width</p>
+<?php TMB_AjaxSpinners::get_instance()->get('Loading Available Width...');?>
 <select name="width" class="js-width">
 </select>
 <p></p>

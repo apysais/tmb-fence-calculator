@@ -47,7 +47,8 @@ class TMB_DataCondition {
 
     $query_args = [
       'post_type' => 'fence',
-      'post_status' => 'publish'
+      'post_status' => 'publish',
+			'posts_per_page'=> -1
     ];
 
     $location = '';

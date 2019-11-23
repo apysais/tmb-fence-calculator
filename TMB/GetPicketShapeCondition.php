@@ -3,10 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 /**
-* Get the timber species condition
-* by location, fence type and height
+* Get the picket species condition
+* by location, fence type
 **/
-class TMB_GetTimberSpeciesCondition {
+class TMB_GetPicketShapeCondition {
   /**
 	 * instance of this class
 	 *
@@ -51,14 +51,14 @@ class TMB_GetTimberSpeciesCondition {
 		$get_wp_data = new TMB_DataCondition;
 		$get_wp_data->get($args);
 		$data_wp_arr = $get_wp_data->getData();
-
+		//tmb_dd($data_wp_arr);
 		if($data_wp_arr){
 			$old_timber_species = '';
 			foreach($data_wp_arr->posts as $k => $v){
-				$timber_species = get_the_terms( $v->ID, 'timber-species' );
-
-				if($timber_species){
-					foreach($timber_species as $tax_k => $tax_v){
+				$picket_shapes = get_the_terms( $v->ID, 'picket-shapes' );
+				//tmb_dd($picket_shapes);
+				if($picket_shapes){
+					foreach($picket_shapes as $tax_k => $tax_v){
 						$img = get_field('image', $tax_v);
 						$card_img = tmb_get_tax_acf_img($img);
 						$data[$tax_v->term_id] = [
@@ -78,4 +78,4 @@ class TMB_GetTimberSpeciesCondition {
 		return $data;
   }
 
-}//TMB_GetTimberSpeciesCondition
+}//TMB_GetPicketShapeCondition

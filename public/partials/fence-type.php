@@ -1,8 +1,19 @@
 <?php if($get_fence_types){ ?>
-  <ul class="row">
+  <div class="row">
     <?php foreach($get_fence_types as $k => $v){ ?>
-              <li class="col-md"><a href="#" class="js-fence-type" data-fence-type="<?php echo $v->slug;?>"><?php echo $v->name;?></a></li>
+              <?php
+                $img = get_field('image', $v);
+                $card_img = tmb_get_tax_acf_img($img)
+              ?>
+              <div class="col-sm-3 fence-type-col">
+                <div class="card text-center">
+                  <img class="card-img-top" src="<?php echo $card_img;?>" alt="">
+                  <div class="card-body">
+                    <a href="#" class="js-fence-type" data-fence-type="<?php echo $v->slug;?>"><?php echo $v->name;?></a>
+                  </div>
+                </div>
+              </div>
     <?php } ?>
-  </ul>
+  </div>
   <input type="hidden" id="input-js-fence-type" name="input-js-fence-type" value="0">
 <?php } ?>
