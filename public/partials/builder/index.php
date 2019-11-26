@@ -1,6 +1,5 @@
 <?php //tmb_dd($rows); ?>
-<div class="bootstra-iso">
-  <form>
+<div class="bootstra-isox">
   <?php if($rows){ ?>
     <?php $index = 0; ?>
     <ul class="nav nav-tabs" id="stepTab" role="tablist">
@@ -57,12 +56,12 @@
                 <?php echo do_shortcode($v['content']); ?>
 
                 <div class="input-group mb-3 group-end next-prev-button">
-                  <?php if($count_rows > $tab_index){ ?>
-                    <a class="btn btn-primary btnNext" data-tab-id="tab-content-<?php echo $k;?>">Next</a>
+                  <?php if($count_rows > $tab_index || $count_rows == 1){ ?>
+                    <a class="btn btn-primary btn-sm btnNext" data-tab-id="tab-content-<?php echo $k;?>">Next</a>
                   <?php } ?>
 
                   <?php if($tab_index > 1){ ?>
-                    <a class="btn btn-primary btnPrevious" data-tab-id="tab-content-<?php echo $k;?>">Previous</a>
+                    <a class="btn btn-primary btn-sm btnPrevious" data-tab-id="tab-content-<?php echo $k;?>">Previous</a>
                   <?php } ?>
                 </div>
                 <!--/. form element wrap -->
@@ -74,5 +73,4 @@
   <?php }//if ?>
 
     <input type="hidden" id="current-step" name="current-step" value="">
-  </form>
 </div><!-- bootstra-iso -->

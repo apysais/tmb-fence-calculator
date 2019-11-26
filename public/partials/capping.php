@@ -6,11 +6,12 @@
             $card_img = tmb_get_tax_acf_img($img)
           ?>
           <div class="col-sm-3 fence-type-col">
-            <div class="card text-center">
+            <a href="#" class="js-capping" data-capping="<?php echo $v->slug;?>" data-val="<?php echo get_field('value', $v);?>"><div class="card text-center">
               <img class="card-img-top" src="<?php echo $card_img;?>" alt="">
               <div class="card-body">
-                <a href="#" class="js-capping" data-capping="<?php echo $v->slug;?>" data-val="<?php echo get_field('value', $v);?>"><?php echo $v->name;?></a>              </div>
-            </div>
+                <?php echo $v->name;?>
+              </div>
+            </div></a>
           </div>
   <?php } ?>
 </div>

@@ -6,7 +6,6 @@
 
 		function show_hide_next_prev_button(action)
 		{
-			console.log(action);
 			if(action == 'show'){
 				$('.next-prev-button').show();
 			}else{
@@ -16,7 +15,6 @@
 
 		function show_hide_nextbutton(action)
 		{
-			console.log(action);
 			if(action == 'show'){
 				$('.btnNext').show();
 			}else{
@@ -26,7 +24,6 @@
 
 		function show_hide_prevbutton(action)
 		{
-			console.log(action);
 			if(action == 'show'){
 				$('.btnPrevious').show();
 			}else{
@@ -125,7 +122,8 @@
 						var _has_active = $('.svg-map > a').hasClass('select-active-map');
 
 						if(_has_active){
-							show_hide_next_prev_button('show');
+							//show_hide_next_prev_button('show');
+							$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
 						}else{
 							_input_au_state.val(0);
 							show_hide_next_prev_button('hide');
@@ -218,9 +216,6 @@
 					var _cookie_prefix = 'fence-type';
 					var _get_cookie = '';
 
-					//show_hide_nextbutton('hide');
-					//show_hide_prevbutton('show');
-					//$('.next-prev-button .btnNext').hide();
 					$('.js-fence-type').on('click', function(e){
 						e.preventDefault();
 						var _this = $(this);
@@ -232,12 +227,16 @@
 							$('.pailing-type-shape').show();
 							$('.picket-type-shape').hide();
 							$('.select-capping').show();
+							$('.js-pailing-overlap-container').show();
+							$('.js-spacing-container').hide();
 						}else{
 							$('.picket-type-shape').show();
 							$('.pailing-type-shape').hide();
 							$('.select-capping').hide();
+							$('.js-pailing-overlap-container').hide();
+							$('.js-spacing-container').show();
 						}
-						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
 						var _has_active = $('.select-type-fence .row > div').hasClass('select-active-card');
 
@@ -284,7 +283,16 @@
 
 						_input_fence_type_shape.val(_get_data);
 
-						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+
+						var _has_active = $('.js-picket-shapes-container > div').hasClass('select-active-card');
+
+						if(_has_active){
+							show_hide_nextbutton('show');
+						}else{
+							show_hide_nextbutton('hide');
+						}
+
 					});
 
 				},
@@ -312,10 +320,9 @@
 
 						_input_timber_species.val(_get_data);
 
-						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
-						var _has_active = $('.select-timber-species .row > div').hasClass('select-active-card');
-
+						var _has_active = $('.js-timber-species-container > div').hasClass('select-active-card');
 						if(_has_active){
 							show_hide_nextbutton('show');
 						}else{
@@ -351,7 +358,7 @@
 						_input_capping.val(_get_data);
 						_input_capping_val.val(_get_data_val);
 
-						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
 						var _has_active = $('.select-capping > div').hasClass('select-active-card');
 
@@ -390,7 +397,7 @@
 						_input_plinth.val(_get_data);
 						_input_plinth_val.val(_get_data_val);
 
-						_this.parent().parent().parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
+						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
 						var _has_active = $('.select-plinth > div').hasClass('select-active-card');
 						if(_has_active){
@@ -765,7 +772,7 @@
 				});
 
 				request.success(function( msg ) {
-					console.log(msg);
+
 					var _js_height_select = $('.js-height');
 
 					$.each(msg.data,function(key, value){
@@ -826,6 +833,7 @@
 					'board_height': board_height,
 				};
 				show_hide_next_prev_button('hide');
+				show_hide_nextbutton('hide');
 				toggle_ajax_spinners('show');
 				var request = $.ajax({
 					url: ajax_object.ajax_url,
@@ -835,17 +843,17 @@
 				});
 
 				request.success(function( msg ) {
-					console.log(msg);
 					var _js_timber_species = $('.js-timber-species-container');
 
 					$.each(msg.data,function(key, value){
 						var _card = '<div class="col-sm-3 timber-species-col">';
+							_card += '<a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">';
 							 _card += '<div class="card text-center">';
 								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
 								_card += '<div class="card-body">';
-									_card += '<a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">'+value.name+'</a>';
+									_card += value.name;
 								_card += '</div>';
-							_card += '</div>';
+							_card += '</div></a>';
 						_card += '</div>';
 						_js_timber_species.append(_card);
 					});
@@ -989,7 +997,7 @@
 				};
 
 				show_hide_next_prev_button('hide');
-
+				show_hide_nextbutton('hide');
 				toggle_ajax_spinners('show');
 
 				var request = $.ajax({
@@ -1000,24 +1008,23 @@
 				});
 
 				request.success(function( msg ) {
-					console.log(msg);
+
 					var _js_picket_shape_select = $('.js-picket-shapes-container');
 
 					$.each(msg.data,function(key, value){
 						var _card = '<div class="col-sm-3 fence-type-col">';
+								_card += '<a href="#" class="js-fence-type-shape" data-type-shape="'+value.slug+'">';
 							 _card += '<div class="card text-center">';
 								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
 								_card += '<div class="card-body">';
-									_card += '<a href="#" class="js-fence-type-shape" data-type-shape="'+value.slug+'">'+value.name+'</a>';
+									_card += value.name;
 								_card += '</div>';
-							_card += '</div>';
+							_card += '</div></a>';
 						_card += '</div>';
 						_js_picket_shape_select.append(_card);
 					});
-
 					show_hide_next_prev_button('show');
 					toggle_ajax_spinners('hide');
-					show_hide_nextbutton('show');
 				});
 
 				request.fail(function( jqXHR, textStatus ) {
@@ -1051,22 +1058,89 @@
 			}
 		})();
 
+		var Email = (function(){
+
+			return {
+				init: function() {
+					$('.send_to_email_button').on('click', function(e){
+						e.preventDefault();
+						$('.send-email-container').hide();
+						show_hide_next_prev_button('hide');
+
+						var send_to_email = $('.send_to_email');
+						var calculate_timber_units = $('.calculate_timber_units');
+						var calculate_vertical_fence_post = $('.calculate_vertical_fence_post');
+						var calculate_min_height_vertical_fence_post = $('.calculate_min_height_vertical_fence_post');
+						var calculate_timber_capping_units = $('.calculate_timber_capping_units');
+						var calculate_fixings = $('.calculate_fixings');
+						var calculate_overlapping_timber_units = $('.calculate_overlapping_timber_units');
+						var calculate_horizontal_support = $('.calculate_horizontal_support');
+						var calculate_total_picket_pailing = $('.calculate_total_picket_pailing');
+
+						var data = {
+							'action': 'send_email',
+							'send_to_email': send_to_email.val(),
+							'calculate_timber_units': calculate_timber_units.val(),
+							'calculate_vertical_fence_post': calculate_vertical_fence_post.val(),
+							'calculate_min_height_vertical_fence_post': calculate_min_height_vertical_fence_post.val(),
+							'calculate_timber_capping_units': calculate_timber_capping_units.val(),
+							'calculate_fixings': calculate_fixings.val(),
+							'calculate_overlapping_timber_units': calculate_overlapping_timber_units.val(),
+							'calculate_horizontal_support': calculate_horizontal_support.val(),
+							'calculate_total_picket_pailing': calculate_total_picket_pailing.val(),
+						};
+
+						toggle_ajax_spinners('show');
+
+						var request = $.ajax({
+							url: ajax_object.ajax_url,
+							method: "POST",
+							data: data,
+							dataType: "json"
+						});
+
+						request.success(function( msg ) {
+							show_hide_next_prev_button('show');
+							toggle_ajax_spinners('hide');
+							$('.send-email-container').show();
+						});
+
+						request.fail(function( jqXHR, textStatus ) {
+							console.log("Request failed: " + textStatus);
+						});
+
+					});
+				},
+			}
+
+		})();
+
+		var PrintThis = (function(){
+			return {
+				init: function() {
+					$('.print_button').on('click', function(e){
+						e.preventDefault();
+						window.print();
+					});
+				},
+			}
+		})();
+
 		var TabCalc = (function(){
 			return {
 				init: function() {
 					_tab_container.on('shown.bs.tab', function (e) {
 					  var current_target = e.target;
-						console.log('current ');
-						console.log(current_target);
 					  var previous_target = e.relatedTarget;
-						console.log('prev ');
-						console.log(previous_target);
 
-						if($(current_target).data('index') > 0){
+						show_hide_next_prev_button('show');
+
+						if( $(current_target).data('index') > 0 ){
 							show_hide_nextbutton('hide');
 						}else{
 							show_hide_nextbutton('show');
 						}
+
 						var _fence_type = SelectFenceType.getValue();
 
 						if($(current_target).hasClass('is-last-step-yes')){
@@ -1078,6 +1152,7 @@
 							CalculateOverLappingTimberUnits.init();
 							CalculateHorizontalSupportRail.init();
 							CalculateTotalPicketPailing.init();
+							show_hide_nextbutton('show');
 						}
 						if($(current_target).hasClass('select-fence-type-shape') && _fence_type == 'pailing'){
 							$('#stepTab li .select-type-fence').tab('show');
@@ -1102,6 +1177,9 @@
 			AjaxGetTimberSpecies.init();
 			AjaxGetWidth.init();
 			AjaxPicketShapeType.init();
+
+			Email.init();
+			PrintThis.init();
 
 			$('.btnNext').click(function() {
 				var _this = $(this);

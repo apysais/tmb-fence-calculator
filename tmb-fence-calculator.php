@@ -132,6 +132,7 @@ function run_tmb_fence_calculator() {
 	TMB_TimberSpeciesAjax::get_instance();
 	TMB_WidthAjax::get_instance();
 	TMB_PicketShapeAjax::get_instance();
+	TMB_SendEmailAjax::get_instance();
 }
 //run_tmb_fence_calculator();
 

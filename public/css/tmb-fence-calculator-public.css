@@ -2,9 +2,18 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ .bootstra-iso .form-control-sm{
+   height:calc(2.5em);
+ }
+ .tab-content > .tab-pane .form-control-plaintext{
+   padding:0 10px;
+ }
+ .select-capping{
+   margin-bottom: 20px;
+ }
  .select-active{
-   background-color: yellow;
-   color:#fff;
+   background-color: #007bff;
+    color: #fff;
  }
 #stepTab{
   display: none;
@@ -13,7 +22,7 @@
   margin-top: 20px;
   color:#fff;
 }
-.btnPrevious{
+.btnNext{
   position: absolute;
   right: 0;
 }
@@ -25,9 +34,20 @@
   list-style-type: none;
 }
 .select-active-card .card{
-  background-color: yellow;
+  background-color: #007bff;
+  color: #fff;
 }
+.select-active-card a{
 
+}
+.tab-content > .tab-pane .fence-type-col a,
+.tab-content > .tab-pane .timber-species-col a
+{
+  text-decoration: none;
+}
+.tab-content > .tab-pane .card-body{
+  padding:2px;
+}
 .svg-map-act{
   fill: #1a659c;
 }
@@ -61,7 +81,7 @@
   text-align: center;
 }
 .svg-map{
-  width: 50%;
+  
 }
 .svg-map a.select-active-map .svg-map-act,
 .svg-map a.select-active-map .svg-map-nsw,
@@ -80,4 +100,20 @@
 .svg-map a:hover .svg-map-vic,
 .svg-map a:hover .svg-map-wa {
     fill: #999;
+}
+
+@media print {
+  .nav-tabs {
+    display: none !important;
+  }
+
+  .tab-content > .tab-pane .info-data .info-data-values {
+    display: block !important;
+  }
+  .tab-content > .tab-pane .info-data .submit-email-print{
+    display: none !important;
+  }
+  .tab-content > .tab-pane .next-prev-button{
+    display: none !important;
+  }
 }

@@ -19,3 +19,14 @@ function tmb_get_tax_acf_img($image_url = '') {
     return $image_url;
   }
 }
+
+function mailtrap($phpmailer) {
+  $phpmailer->isSMTP();
+  $phpmailer->Host = 'smtp.mailtrap.io';
+  $phpmailer->SMTPAuth = true;
+  $phpmailer->Port = 2525;
+  $phpmailer->Username = '03bb6f02053c14';
+  $phpmailer->Password = 'b34291b889be14';
+}
+
+//add_action('phpmailer_init', 'mailtrap');

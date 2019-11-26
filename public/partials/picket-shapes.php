@@ -8,12 +8,12 @@
               $card_img = tmb_get_tax_acf_img($img)
             ?>
             <div class="col-sm-3 fence-type-col">
-              <div class="card text-center">
+              <a href="#" class="js-fence-type-shape" data-type-shape="<?php echo $v->slug;?>"><div class="card text-center">
                 <img class="card-img-top" src="<?php echo $card_img;?>" alt="">
                 <div class="card-body">
-                  <a href="#" class="js-fence-type-shape" data-type-shape="<?php echo $v->slug;?>"><?php echo $v->name;?></a>
+                  <?php echo $v->name;?>
                 </div>
-              </div>
+              </div></a>
             </div>
     <?php } ?>
     </div>
@@ -27,12 +27,12 @@
           $card_img = tmb_get_tax_acf_img($img)
         ?>
         <div class="col-sm-3 fence-type-col">
-          <div class="card text-center">
+          <a href="#" class="js-fence-type-shape" data-type-shape="<?php echo $k;?>"><div class="card text-center">
             <img class="card-img-top" src="<?php echo $card_img;?>" alt="">
             <div class="card-body">
-              <a href="#" class="js-fence-type-shape" data-type-shape="<?php echo $k;?>"><?php echo $v;?></a>
+              <?php echo $v;?>
             </div>
-          </div>
+          </div></a>
         </div>
     <?php } ?>
     </div>
