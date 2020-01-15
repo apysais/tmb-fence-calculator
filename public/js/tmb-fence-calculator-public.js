@@ -3,6 +3,16 @@
 
 	$(window).load(function(){
 		var _tab_container = $('#stepTab');
+		var _fence_type_var_paling = 'paling';
+		var _fence_type_var_picket = 'picket';
+
+		function _str_ucfirst(_str)
+		{
+			_str = _str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+			    return letter.toUpperCase();
+			});
+			return _str;
+		}
 
 		function show_hide_next_prev_button(action)
 		{
@@ -223,18 +233,22 @@
 
 						_input_fence_type.val(_get_data);
 
-						if(_get_data == 'pailing'){
+						if(_get_data == _fence_type_var_paling){
 							$('.pailing-type-shape').show();
 							$('.picket-type-shape').hide();
 							$('.select-capping').show();
 							$('.js-pailing-overlap-container').show();
 							$('.js-spacing-container').hide();
+							$('.pailing-videos').show();
+							$('.picket-videos').hide();
 						}else{
 							$('.picket-type-shape').show();
 							$('.pailing-type-shape').hide();
-							$('.select-capping').hide();
+							$('.select-capping').attr('style','display:none !important');
 							$('.js-pailing-overlap-container').hide();
 							$('.js-spacing-container').show();
+							$('.pailing-videos').hide();
+							$('.picket-videos').show();
 						}
 						_this.parent().toggleClass('select-active-card').siblings().removeClass('select-active-card');
 
@@ -434,8 +448,52 @@
 
 					var _get_fence_type = SelectFenceType.getValue();
 
-					var _overlap = 0;
-					if(_get_fence_type == 'pailing'){
+					var _calc;
+
+					_calc = ( Number(_length_m) / ( Number(_width.val()) + Number(_spacing.val()) ) );
+					if ( _get_fence_type == _fence_type_var_paling ) {
+						//length / ( (board-width * 2) - (paling-overlap * 2) )
+						_calc = ( Number(_length_m) / ( (Number(_width.val()) * 2) - (Number(_pailing_overlap.val()) * 2) ) );
+					}
+					return _calc;
+				},
+
+				getValue: function() {
+					return Math.ceil(_calc);
+				},
+
+				init: function() {
+					var _get_calc = Math.ceil(CalculateTimberUnits.calc());
+					$('.calculate_timber_units').val(_get_calc);
+				},
+
+				onClick: function() {
+					$('.calculate_timber_units').on('click', function(e){
+						e.preventDefault();
+						var _msg = $('.calculate_timber_units_msg');
+						var _get_calc = Math.ceil(CalculateTimberUnits.calc());
+						console.log(_get_calc);
+					});
+				},
+			}
+		})();
+
+		var CalculateTimberUnitsV1 = (function(){
+			var _calc = 0;
+
+			return {
+				calc: function() {
+					var _length 					= $('.js-length');
+					var _width 						= $('.js-width');
+					var _spacing 					= $('.js-spacing');
+					var _pailing_overlap 	= $('.js-pailing-overlap');
+
+					var _length_m = SelectLength.convertToM();
+
+					var _get_fence_type = SelectFenceType.getValue();
+
+					var _overlap = _spacing.val();
+					if ( _get_fence_type == _fence_type_var_paling ) {
 						_overlap = Number(_pailing_overlap.val());
 					}
 
@@ -475,15 +533,15 @@
 					var _length_m = SelectLength.convertToM();
 
 					var _location					= SelectLocation.getValue();
-					var _location_val			= 2400;
+					var _location_val			= 2700;
 
 					if(_location == 'wa'){
-						_location_val = 2700;
+						_location_val = 2400;
 					}
 
-					var _calc_plus = ( _location_val + 1 );
+					var _calc_plus = ( _location_val );
 
-					_calc = ( _length_m / ( _calc_plus ) );
+					_calc = ( _length_m / ( _calc_plus ) + 1 );
 
 					return _calc;
 				},
@@ -641,7 +699,7 @@
 					var _calc_fence = 0;
 					if(_fence_type == 'picket'){
 						_calc_fence = 0;
-					}else if(_fence_type == 'pailing'){
+					}else if(_fence_type == _fence_type_var_paling){
 						_calc_fence = (Number(_timber_units) - 1);
 					}
 
@@ -664,6 +722,52 @@
 						e.preventDefault();
 
 						var _get_calc = CalculateOverLappingTimberUnits.calc();
+						console.log(_get_calc);
+					});
+				},
+			}
+		})();
+
+		var CalculateOverLappingTimberUnitsV5 = (function(){
+			var _calc = 0;
+
+			return {
+				calc: function() {
+					var _fence_type 	= SelectFenceType.getValue();
+					var _timber_units = Math.ceil(CalculateTimberUnits.calc());
+					var _paling_overlap = $('.js-pailing-overlap').val();
+					var _length_m = SelectLength.convertToM();
+					var _width = SelectWidth.getValue();
+
+					if(_paling_overlap == ''){
+						_paling_overlap = 0;
+					}
+
+					if(_fence_type == 'picket'){
+						_paling_overlap = 0;
+						_calc = 0;
+					}else if(_fence_type == _fence_type_var_paling){
+						var _calc_fence = ( Number(_length_m) / ( Number(_width) + Number(_paling_overlap) ) );
+						_calc_fence = Math.ceil(_calc_fence);
+						_calc = Math.ceil( _calc_fence * 1.5 );
+					}
+					return _calc;
+				},
+
+				getValue: function() {
+					return _calc;
+				},
+
+				init: function() {
+					var _get_calc = CalculateOverLappingTimberUnitsV5.calc();
+					$('.calculate_overlapping_timber_units').val(_get_calc);
+				},
+
+				onClick: function() {
+					$('.calculate_overlapping_timber_units').on('click', function(e){
+						e.preventDefault();
+
+						var _get_calc = CalculateOverLappingTimberUnitsV5.calc();
 						console.log(_get_calc);
 					});
 				},
@@ -761,6 +865,9 @@
 					'fence_type': fence_type,
 					'fence_shape': fence_shape,
 				};
+				if(fence_type == _fence_type_var_paling){
+					delete data.fence_shape;
+				}
 				show_hide_next_prev_button('hide');
 				toggle_ajax_spinners('show');
 				$('.js-height').hide();
@@ -832,6 +939,9 @@
 					'fence_shape': fence_shape,
 					'board_height': board_height,
 				};
+				if(fence_type == _fence_type_var_paling){
+					delete data.fence_shape;
+				}
 				show_hide_next_prev_button('hide');
 				show_hide_nextbutton('hide');
 				toggle_ajax_spinners('show');
@@ -846,7 +956,7 @@
 					var _js_timber_species = $('.js-timber-species-container');
 
 					$.each(msg.data,function(key, value){
-						var _card = '<div class="col-sm-3 timber-species-col">';
+						var _card = '<div class="col-md-4  col-sm-6 col-6 timber-species-col">';
 							_card += '<a href="#" class="js-timber-species" data-timber-species="'+value.slug+'">';
 							 _card += '<div class="card text-center">';
 								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
@@ -919,6 +1029,9 @@
 					'board_height': board_height,
 					'timber_species': timber_species,
 				};
+				if(fence_type == _fence_type_var_paling){
+					delete data.fence_shape;
+				}
 				show_hide_next_prev_button('hide');
 				toggle_ajax_spinners('show');
 				$('.js-width').hide();
@@ -973,6 +1086,7 @@
 								_board_height,
 								_timber_species
 							);
+
 						}
 
 					});
@@ -1012,7 +1126,7 @@
 					var _js_picket_shape_select = $('.js-picket-shapes-container');
 
 					$.each(msg.data,function(key, value){
-						var _card = '<div class="col-sm-3 fence-type-col">';
+						var _card = '<div class="col-md-4  col-sm-6 col-6 fence-type-col">';
 								_card += '<a href="#" class="js-fence-type-shape" data-type-shape="'+value.slug+'">';
 							 _card += '<div class="card text-center">';
 								_card += '<img class="card-img-top" src="'+value.image+'" alt="">';
@@ -1064,7 +1178,7 @@
 				init: function() {
 					$('.send_to_email_button').on('click', function(e){
 						e.preventDefault();
-						$('.send-email-container').hide();
+						//$('.send-email-container').hide();
 						show_hide_next_prev_button('hide');
 
 						var send_to_email = $('.send_to_email');
@@ -1077,9 +1191,27 @@
 						var calculate_horizontal_support = $('.calculate_horizontal_support');
 						var calculate_total_picket_pailing = $('.calculate_total_picket_pailing');
 
+						var _capping;
+						if(SelectCapping.getValue() == 1){
+							_capping = 'Yes';
+						}else{
+							_capping = 'No';
+						}
+
 						var data = {
 							'action': 'send_email',
 							'send_to_email': send_to_email.val(),
+							'selected_state': SelectLocation.getValue(),
+							'type_fence': SelectFenceType.getValue(),
+							'fence_type_shape': SelectFenceTypeShape.getValue(),
+							'length': SelectLength.getValue(),
+							'height': SelectBoardHeight.getValue(),
+							'capping': _capping,
+							'plinth': SelectPlinth.getValue(),
+							'timber_species': SelectTimberSpecies.getValue(),
+							'width': SelectWidth.getValue(),
+							'spacing': $('.js-spacing').val(),
+							'overlap': $('.js-pailing-overlap').val(),
 							'calculate_timber_units': calculate_timber_units.val(),
 							'calculate_vertical_fence_post': calculate_vertical_fence_post.val(),
 							'calculate_min_height_vertical_fence_post': calculate_min_height_vertical_fence_post.val(),
@@ -1090,7 +1222,9 @@
 							'calculate_total_picket_pailing': calculate_total_picket_pailing.val(),
 						};
 
-						toggle_ajax_spinners('show');
+						//toggle_ajax_spinners('show');
+						$('.ajax-msg').show();
+						$('.ajax-msg').html('Sending email to ' + send_to_email.val());
 
 						var request = $.ajax({
 							url: ajax_object.ajax_url,
@@ -1101,8 +1235,8 @@
 
 						request.success(function( msg ) {
 							show_hide_next_prev_button('show');
-							toggle_ajax_spinners('hide');
-							$('.send-email-container').show();
+							$('.ajax-msg').html('Email has been sent to ' + send_to_email.val()).fadeOut(5000);
+							//$('.send-email-container').show();
 						});
 
 						request.fail(function( jqXHR, textStatus ) {
@@ -1152,10 +1286,53 @@
 							CalculateOverLappingTimberUnits.init();
 							CalculateHorizontalSupportRail.init();
 							CalculateTotalPicketPailing.init();
+
+							var _str_state = SelectLocation.getValue().toUpperCase();
+							var _str_replace = _str_state.replace('-', ' / ');
+							$('.bom-selected-state').val( _str_replace );
+
+							var _fence_type_str = _str_ucfirst(SelectFenceType.getValue());
+							$('.bom-type-fence').val( _fence_type_str );
+
+							if(SelectFenceTypeShape.getValue() == 0 ){
+								$('.bom-fence-type-shape-container').hide();
+							}else{
+								$('.bom-fence-type-shape-container').show();
+								if(SelectFenceTypeShape.getValue() == 'gothic-tas'){
+									var _fence_type_shape_str = 'Gothic';
+								}else{
+									var _fence_type_shape_str = _str_ucfirst(SelectFenceTypeShape.getValue());
+								}
+								_fence_type_shape_str = _fence_type_shape_str.replace('-', ' ');
+								$('.bom-fence-type-shape').val( _fence_type_shape_str );
+							}
+
+							$('.bom-length').val( SelectLength.getValue() );
+							$('.bom-height').val( SelectBoardHeight.getValue() );
+							if(SelectCapping.getValue() == 1){
+								$('.bom-capping').val('Yes');
+							}else{
+								$('.bom-capping').val('No');
+							}
+
+							$('.bom-plinth').val( SelectPlinth.getValue() );
+
+							var _timber_species_str = _str_ucfirst(SelectTimberSpecies.getValue());
+							_timber_species_str = _timber_species_str.replace('-', ' ');
+							$('.bom-timber-species').val( _timber_species_str );
+
+							$('.bom-width').val( SelectWidth.getValue() );
+							$('.bom-spacing').val( $('.js-spacing').val() );
+							$('.bom-overlap').val( $('.js-pailing-overlap').val() );
+
 							show_hide_nextbutton('show');
 						}
-						if($(current_target).hasClass('select-fence-type-shape') && _fence_type == 'pailing'){
+						if($(current_target).hasClass('select-fence-type-shape') && _fence_type == _fence_type_var_paling){
 							$('#stepTab li .select-type-fence').tab('show');
+						}
+						$('.note').html('');
+						if( _fence_type == _fence_type_var_paling ) {
+							$('.note').html('**Includes the number of overlap units for Paling Fence.');
 						}
 					});
 				},
@@ -1181,18 +1358,41 @@
 			Email.init();
 			PrintThis.init();
 
-			$('.btnNext').click(function() {
+			$('.btnNext').click(function(e) {
 				var _this = $(this);
 				var _tab_id = _this.data('tab-id');
 				var _fence_type = $('#' + _tab_id).find('#input-js-fence-type').val();
-				if(_fence_type == 'pailing'){
+				var _length_input = $('#' + _tab_id).find('.js-length').val();
+				var _length_input = $('#' + _tab_id).find('.js-length').val();
+				var _pailing_overlap = $('#' + _tab_id).find('.js-pailing-overlap').val();
+
+				if(_fence_type == _fence_type_var_paling){
 					$('#stepTab li .select-length-height').tab('show');
 				}else{
-					$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+					if( typeof _length_input !== 'undefined' ){
+						if(_length_input == 0 || _length_input == ''){
+							alert('Length is required');
+						}else{
+							$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+						}
+					} else if ( typeof _pailing_overlap !== 'undefined' ) {
+						var _width = SelectWidth.getValue();
+						var _min_width = (_width / 2);
+
+						if ( _pailing_overlap > _min_width) {
+							alert('Overlap must be less than half of board width.');
+						}else{
+							$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+						}
+					}else{
+						$('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+					}
+
 				}
+
 			});
 
-			$('.btnPrevious').click(function() {
+			$('.btnPrevious').click(function(e) {
 				$('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
 			});
 

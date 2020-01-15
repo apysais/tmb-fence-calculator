@@ -1,87 +1,135 @@
 /**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
- .bootstra-iso .form-control-sm{
-   height:calc(2.5em);
- }
- .tab-content > .tab-pane .form-control-plaintext{
-   padding:0 10px;
- }
- .select-capping{
-   margin-bottom: 20px;
- }
- .select-active{
-   background-color: #007bff;
-    color: #fff;
- }
+* All of the CSS for your public-facing functionality should be
+* included in this file.
+*/
+.bootstra-iso .form-control-sm{
+height:calc(2.5em);
+}
+.tab-content > .tab-pane .form-control-plaintext{
+  padding:0 10px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #767676;
+  border-radius: 4px;
+  width: 358px;
+  height: 40px;
+}
+.bootstra-iso .form-control{
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+border: 1px solid #767676;
+border-radius: 4px;
+}
+.dimension-fence .form-control{
+  font-size: 24px;
+}
+.dimension-fence label{
+  font-size: 24px;
+}
+.dimension-fence span{
+  font-size: 32px;
+}
+.select-capping{
+margin-bottom: 20px;
+}
+.select-active{
+background-color: #007bff;
+color: #fff;
+}
 #stepTab{
-  display: none;
+display: none;
 }
 .next-prev-button{
-  margin-top: 20px;
-  color:#fff;
+margin-top: 20px;
+color:#fff;
 }
 .btnNext{
-  position: absolute;
-  right: 0;
+position: absolute;
+right: 0;
 }
 
 .index-last-step .btnPrevious{
-  margin-left: 0;
+margin-left: 0;
 }
 .tab-pane ul li{
-  list-style-type: none;
+list-style-type: none;
 }
 .select-active-card .card{
-  background-color: #007bff;
-  color: #fff;
+background-color: #007bff;
+color: #fff;
 }
 .select-active-card a{
 
 }
+.tab-content > .tab-pane h1{
+margin-bottom: 50px;
+font-weight:bold;
+letter-spacing: 0;
+color: #000000;
+}
 .tab-content > .tab-pane .fence-type-col a,
 .tab-content > .tab-pane .timber-species-col a
 {
-  text-decoration: none;
+text-decoration: none;
+color:#1477DB;
 }
 .tab-content > .tab-pane .card-body{
-  padding:2px;
+padding: 2px;
+font-size: 32px;
+font-weight: bold;
+letter-spacing: 0;
+line-height: 32px;
+}
+.card-img-top{
+  border: 2px solid #CCCCCC;
+  border-style: solid !important;
+
+}
+.with-spacing-overlap label{
+  font-size: 24px;
+}
+.with-spacing-overlap .form-control{
+  font-size: 20px;
+}
+.with-spacing-overlap span{
+  font-size: 24px;
+}
+.tab-content > .tab-pane .card {
+border:0;
+border-radius: 0;
 }
 .svg-map-act{
-  fill: #1a659c;
+fill: #1a659c;
 }
 .svg-map-act-line{
-  stroke:#555;
-  width:2px;
+stroke:#555;
+width:2px;
 }
 .svg-map-nsw{
-  fill: #57b9fa;
+fill: #57b9fa;
 }
 .svg-map-nt{
-  fill: #57b9fa;
+fill: #57b9fa;
 }
 .svg-map-qld{
-  fill: #1a659c;
+fill: #1a659c;
 }
 .svg-map-sa{
-  fill: #04a0ed;
+fill: #04a0ed;
 }
 .svg-map-tas{
-  fill: #04a0ed;
+fill: #04a0ed;
 }
 .svg-map-vic{
-  fill: #0a7ec7;
+fill: #0a7ec7;
 }
 .svg-map-wa{
-  fill: #0a7ec7;
+fill: #0a7ec7;
 }
 
 .map-container{
-  text-align: center;
+text-align: center;
 }
 .svg-map{
-  
+  max-height: 55vh;
 }
 .svg-map a.select-active-map .svg-map-act,
 .svg-map a.select-active-map .svg-map-nsw,
@@ -99,9 +147,47 @@
 .svg-map a:hover .svg-map-tas,
 .svg-map a:hover .svg-map-vic,
 .svg-map a:hover .svg-map-wa {
-    fill: #999;
+  fill: #999;
 }
 
+.container-tab{
+  margin-top:50px;
+  margin-bottom:50px;
+}
+.info-data-values label.col-form-label{
+  padding:0;
+  font-size: 24px;
+  height: 28px;
+  text-align: left;
+
+}
+.info-data-values .form-group{
+  margin-bottom: 1.5em;
+}
+.info-data,
+.info-data-values
+{
+  font-size: 24px;
+}
+.info-data .form-control,
+.info-data-values .form-control
+{
+  font-size: 20px;
+}
+.next-prev-button a{
+  min-width: 150px;
+}
+.send-email-container .btn{
+width: 150px;
+/*height: 35px;*/
+background: #1477DB 0% 0% no-repeat padding-box;
+color: #fff;
+border-radius: 8px;
+font-size: 14px;
+letter-spacing: 0;
+vertical-align: middle;
+    margin-bottom: 5px;
+}
 @media print {
   .nav-tabs {
     display: none !important;
@@ -116,4 +202,112 @@
   .tab-content > .tab-pane .next-prev-button{
     display: none !important;
   }
+}
+
+
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .svg-map {
+      max-height: 55vh;
+  }
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .svg-map {
+      max-height: 55vh;
+  }
+}
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .info-data-values label.col-form-label{
+    height: auto;
+	padding: 0px !important;
+  }
+  .tab-content > .tab-pane .form-control-plaintext{
+    text-align: right;
+  }
+  .home h1{
+    font-size: 20px;
+  }
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+  .info-data-values label.col-form-label{
+	height: auto;
+	padding: 0px !important;
+
+  }
+  .tab-content > .tab-pane .card-body {
+    font-size: 30px !important;
+  }
+
+  .home .next-prev-button .btn {
+      font-size: 18px !important;
+  }
+
+  .with-spacing-overlap label{
+    font-size: 24px !important;
+  }
+  .with-spacing-overlap span {
+    font-size: 24px !important;
+  }
+
+  .custom-logo {
+    max-width: 50% !important;
+  }
+
+  .tab-content > .tab-pane .form-control-plaintext{
+    text-align: right;
+  }
+
+  .home h1{
+    font-size: 20px;
+  }
+
+}
+.send-email-container p{
+	font-size:14px !important;
+}
+.bootstra-iso label{
+  font-size: 24px;
 }
