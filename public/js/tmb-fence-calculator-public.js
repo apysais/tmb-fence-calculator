@@ -478,6 +478,7 @@
 			}
 		})();
 
+		//depreciated not used
 		var CalculateTimberUnitsV1 = (function(){
 			var _calc = 0;
 
@@ -728,6 +729,7 @@
 			}
 		})();
 
+		//depreciated not used
 		var CalculateOverLappingTimberUnitsV5 = (function(){
 			var _calc = 0;
 
