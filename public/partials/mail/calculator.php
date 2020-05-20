@@ -46,7 +46,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:20px;font-family:Arial,Verdana,sans-serif;line-height:24px">
-                                                Vertical Fence Post</td>
+                                                Vertical Fence Post <br/><span style="font-style:normal;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial,Verdana,sans-serif;line-height:12px">Max span 2400mm for WA, 2700mm all other states.</span></td>
                                             </tr>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:40px;font-family:Arial,Verdana,sans-serif;line-height:48px">
@@ -71,7 +71,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:20px;font-family:Arial,Verdana,sans-serif;line-height:24px">
-                                              Min Height Of Vertical Fence Post </td>
+                                              Min Height Of Vertical Fence Post <br/><span style="font-style:normal;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial,Verdana,sans-serif;line-height:12px">Includes 600mm for inground.</span></td>
                                             </tr>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:40px;font-family:Arial,Verdana,sans-serif;line-height:48px">
@@ -187,7 +187,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:20px;font-family:Arial,Verdana,sans-serif;line-height:24px">
-                                              Horizontal Support Rails </td>
+                                              Horizontal Support Rails <br/><span style="font-style:normal;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial,Verdana,sans-serif;line-height:12px">Min 2 per panel, Min 3 for 1500mm and higher.</span> </td>
                                             </tr>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:40px;font-family:Arial,Verdana,sans-serif;line-height:48px">
@@ -573,7 +573,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:20px;font-family:Arial,Verdana,sans-serif;line-height:24px">
-                                              Spacing</td>
+                                              Gap</td>
                                             </tr>
                                             <tr>
                                               <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:40px;font-family:Arial,Verdana,sans-serif;line-height:48px">
@@ -769,7 +769,12 @@
                       <tr>
 
                       </tr>
-                      <!--<tr>
+                      <tr>
+                        <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:16px;font-family:Arial,Verdana,sans-serif;line-height:24px">
+                        Ensure to check with your local council for regulations and planning requirements that may apply. </td>
+                      </tr>
+
+						<!--<tr>
                         <td align="center" valign="top" style="font-style:normal;font-variant:normal;font-weight:normal;font-size:16px;font-family:Arial,Verdana,sans-serif;line-height:24px">
                         * Includes an additional 10% for wastage </td>
                       </tr>-->

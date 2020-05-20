@@ -60,17 +60,17 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-6 col-6 col-form-label">Spacing</label>
+      <label class="col-sm-6 col-6 col-form-label">Gap</label>
       <div class="col-sm-6 col-6">
         <input type="text" readonly class="form-control-plaintext form-control form-control-sm bom-spacing">
       </div>
     </div>
-    <div class="form-group row">
+    <!-- <div class="form-group row">
       <label class="col-sm-6 col-6 col-form-label">Overlap</label>
       <div class="col-sm-6 col-6">
         <input type="text" readonly class="form-control-plaintext form-control form-control-sm bom-overlap">
       </div>
-    </div>
+    </div> -->
     <div>
       <h3 class="text-center">Your List Of Materials Required Is Below</h3>
     </div>
@@ -82,13 +82,13 @@
     </div>-->
     <input type="hidden" readonly class="form-control-plaintext form-control form-control-sm calculate_timber_units">
     <div class="form-group row">
-      <label class="col-sm-6 col-6 col-form-label">Vertical Fence Post</label>
+      <label class="col-sm-6 col-6 col-form-label">Vertical Fence Post <small  class="form-text text-muted" style="font-size:60%;">Max span 2400mm for WA, 2700mm all other states.</small></label>
       <div class="col-sm-6 col-6">
         <input type="text" readonly class="form-control-plaintext  form-control form-control-sm calculate_vertical_fence_post">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-6 col-6 col-form-label">Min Height Of Vertical Fence Post</label>
+      <label class="col-sm-6 col-6 col-form-label">Min Height Of Vertical Fence Post <small  class="form-text text-muted" style="font-size:60%;">Includes 600mm for inground.</small></label>
       <div class="col-sm-6 col-6">
         <input type="text" readonly class="form-control-plaintext form-control form-control-sm  calculate_min_height_vertical_fence_post" >
       </div>
@@ -113,7 +113,7 @@
     </div>-->
     <input type="hidden" readonly class="form-control-plaintext form-control form-control-sm  calculate_overlapping_timber_units">
     <div class="form-group row">
-      <label class="col-sm-6 col-6 col-form-label">Horizontal Support Rails</label>
+      <label class="col-sm-6 col-6 col-form-label">Horizontal Support Rails <small  class="form-text text-muted" style="font-size:60%;">Min 2 per panel, Min 3 for 1500mm and higher.</small></label>
       <div class="col-sm-6 col-6">
         <input type="text" readonly class="form-control-plaintext form-control form-control-sm  calculate_horizontal_support">
       </div>

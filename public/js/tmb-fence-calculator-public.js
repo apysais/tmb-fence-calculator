@@ -5,6 +5,8 @@
 		var _tab_container = $('#stepTab');
 		var _fence_type_var_paling = 'paling';
 		var _fence_type_var_picket = 'picket';
+		var _paling_overlap = 0;
+
 
 		function _str_ucfirst(_str)
 		{
@@ -230,8 +232,13 @@
 						e.preventDefault();
 						var _this = $(this);
 						var _get_data = _this.data('fence-type');
+						var _str_state = SelectLocation.getValue().toUpperCase();
 
 						_input_fence_type.val(_get_data);
+						$('.wa-js-with-spacing-overlap').hide();
+						$('.not-wa-js-with-spacing-overlap').hide();
+
+
 
 						if(_get_data == _fence_type_var_paling){
 							$('.pailing-type-shape').show();
@@ -241,6 +248,13 @@
 							$('.js-spacing-container').hide();
 							$('.pailing-videos').show();
 							$('.picket-videos').hide();
+							var _str_state = SelectLocation.getValue().toUpperCase();
+							if ( _str_state == 'WA' ) {
+								$('.wa-js-with-spacing-overlap').show();
+							} else {
+								$('.not-wa-js-with-spacing-overlap').show();
+							}
+
 						}else{
 							$('.picket-type-shape').show();
 							$('.pailing-type-shape').hide();
@@ -442,14 +456,19 @@
 					var _length 					= $('.js-length');
 					var _width 						= $('.js-width');
 					var _spacing 					= $('.js-spacing');
-					var _pailing_overlap 	= $('.js-pailing-overlap');
-
+					var _str_state = SelectLocation.getValue().toUpperCase();
+					if ( _str_state == 'WA' ) {
+						var _pailing_overlap 	= $('.wa-js-spacing-gap');
+					} else {
+					  var _pailing_overlap = $('.not-wa-js-spacing-gap');
+					}
 					var _length_m = SelectLength.convertToM();
 
 					var _get_fence_type = SelectFenceType.getValue();
 
 					var _calc;
-
+					//19-05-2020
+					//_calc = ( Number(_length_m) / ( Number(_width.val()) + Number(_spacing.val()) ) );
 					_calc = ( Number(_length_m) / ( Number(_width.val()) + Number(_spacing.val()) ) );
 					if ( _get_fence_type == _fence_type_var_paling ) {
 						//length / ( (board-width * 2) - (paling-overlap * 2) )
@@ -472,13 +491,11 @@
 						e.preventDefault();
 						var _msg = $('.calculate_timber_units_msg');
 						var _get_calc = Math.ceil(CalculateTimberUnits.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
 		})();
 
-		//depreciated not used
 		var CalculateTimberUnitsV1 = (function(){
 			var _calc = 0;
 
@@ -519,7 +536,6 @@
 						e.preventDefault();
 						var _msg = $('.calculate_timber_units_msg');
 						var _get_calc = Math.ceil(CalculateTimberUnits.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -561,7 +577,6 @@
 						e.preventDefault();
 
 						var _get_calc = Math.ceil(CalculateVerticalFencePost.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -600,7 +615,6 @@
 						e.preventDefault();
 
 						var _get_calc = Math.ceil(CalculateMinHeightVerticalFencePost.calc());
-						console.log(_get_calc);
 					});
 				},
 
@@ -648,7 +662,6 @@
 						e.preventDefault();
 
 						var _get_calc = Math.ceil(CalculateTimberCappingUnits.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -683,7 +696,6 @@
 						e.preventDefault();
 
 						var _get_calc = Math.ceil(CalculateFixings.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -723,13 +735,11 @@
 						e.preventDefault();
 
 						var _get_calc = CalculateOverLappingTimberUnits.calc();
-						console.log(_get_calc);
 					});
 				},
 			}
 		})();
 
-		//depreciated not used
 		var CalculateOverLappingTimberUnitsV5 = (function(){
 			var _calc = 0;
 
@@ -737,11 +747,17 @@
 				calc: function() {
 					var _fence_type 	= SelectFenceType.getValue();
 					var _timber_units = Math.ceil(CalculateTimberUnits.calc());
-					var _paling_overlap = $('.js-pailing-overlap').val();
+					//var _paling_overlap = $('.js-pailing-overlap').val();
 					var _length_m = SelectLength.convertToM();
 					var _width = SelectWidth.getValue();
+					var _str_state = SelectLocation.getValue().toUpperCase();
+					if ( _str_state == 'WA' ) {
+					  _paling_overlap = $('.wa-js-spacing-gap').val();
+					} else {
+					  _paling_overlap = $('.not-wa-js-spacing-gap').val();
+					}
 
-					if(_paling_overlap == ''){
+					if( _paling_overlap == ''){
 						_paling_overlap = 0;
 					}
 
@@ -770,7 +786,6 @@
 						e.preventDefault();
 
 						var _get_calc = CalculateOverLappingTimberUnitsV5.calc();
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -814,7 +829,6 @@
 						e.preventDefault();
 
 						var _get_calc = Math.round(CalculateHorizontalSupportRail.calc());
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -848,7 +862,6 @@
 						e.preventDefault();
 
 						var _get_calc = CalculateTotalPicketPailing.calc();
-						console.log(_get_calc);
 					});
 				},
 			}
@@ -1046,7 +1059,6 @@
 				});
 
 				request.success(function( msg ) {
-					console.log(msg);
 					var _js_width_select = $('.js-width');
 
 					$.each(msg.data,function(key, value){
@@ -1213,7 +1225,7 @@
 							'timber_species': SelectTimberSpecies.getValue(),
 							'width': SelectWidth.getValue(),
 							'spacing': $('.js-spacing').val(),
-							'overlap': $('.js-pailing-overlap').val(),
+							'overlap': _paling_overlap,
 							'calculate_timber_units': calculate_timber_units.val(),
 							'calculate_vertical_fence_post': calculate_vertical_fence_post.val(),
 							'calculate_min_height_vertical_fence_post': calculate_min_height_vertical_fence_post.val(),
@@ -1324,7 +1336,14 @@
 							$('.bom-timber-species').val( _timber_species_str );
 
 							$('.bom-width').val( SelectWidth.getValue() );
-							$('.bom-spacing').val( $('.js-spacing').val() );
+							//$('.bom-spacing').val( $('.js-pailing-overlap').val() );
+							var _str_state = SelectLocation.getValue().toUpperCase();
+							if ( _str_state == 'WA' ) {
+								$('.bom-spacing').val( $('.wa-js-spacing-gap').val() );
+							} else {
+								$('.bom-spacing').val( $('.not-wa-js-spacing-gap').val() );
+							}
+
 							$('.bom-overlap').val( $('.js-pailing-overlap').val() );
 
 							show_hide_nextbutton('show');
@@ -1366,7 +1385,7 @@
 				var _fence_type = $('#' + _tab_id).find('#input-js-fence-type').val();
 				var _length_input = $('#' + _tab_id).find('.js-length').val();
 				var _length_input = $('#' + _tab_id).find('.js-length').val();
-				var _pailing_overlap = $('#' + _tab_id).find('.js-pailing-overlap').val();
+				//var _pailing_overlap = $('#' + _tab_id).find('.js-pailing-overlap').val();
 
 				if(_fence_type == _fence_type_var_paling){
 					$('#stepTab li .select-length-height').tab('show');
